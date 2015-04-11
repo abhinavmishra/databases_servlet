@@ -36,9 +36,27 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<title>Home Page</title>
 </head>
+<h2>
+Welcome to Columbia Groups
+</h2>
 <body>
+<%
+Boolean addOrgWorked = (Boolean) session.getAttribute("badaddorg"); 
+if(addOrgWorked!=null){ 
+	if(addOrgWorked==true){ 
+		out.println("organization add/removal/update failed check oid and name"); 
+		
+	}
+	else{ 
+		out.println(""); 
+	}
+}
+%>
 	<p>
-		Click <a href="addorg.jsp">here</a> to add an organization.
+		Click <a href="addorg.jsp">here</a> to add, remove, or update an organization.
+	</p>
+	<p>
+	Click <a href="studentportal.jsp"> here to access student portal</a>
 	</p>
 </body>
 </html>

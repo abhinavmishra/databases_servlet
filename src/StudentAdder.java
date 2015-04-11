@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class MySQLServlet
  */
-@WebServlet(description = "Adds a book to the library under the current user", urlPatterns = { "/addorg" })
-public class OrgAdder extends HttpServlet {
+@WebServlet(description = "Adds a book to the library under the current user", urlPatterns = { "/addstudent" })
+public class StudentAdder extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private Connection conn;
 
@@ -26,7 +26,7 @@ public class OrgAdder extends HttpServlet {
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public OrgAdder() {
+	public StudentAdder() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -42,46 +42,47 @@ public class OrgAdder extends HttpServlet {
 
 			// Edit the following to use your endpoint, database name, username, and password
 			conn = DriverManager.getConnection("jdbc:mysql://cs4111.cebi8wvrzeok.us-west-2.rds.amazonaws.com:3306/cs4111","anm2147","databases");
-
+			
 			String opt = request.getParameter("option"); 
-			String domain = request.getParameter("domain"); 
-			String position_count = request.getParameter("position_count"); 
-			String member_count = request.getParameter("member_count"); 
-			String oid = request.getParameter("oid"); 
+			String major = request.getParameter("major"); 
+			String school = request.getParameter("school"); 
+			String year = request.getParameter("year"); 
+			String uni = request.getParameter("uni"); 
+			String name = request.getParameter("name"); 
 			if(opt.equals("update")){ 
-				if(!domain.equals("")){ 
-					String update_query = "UPDATE ORGANIZATION SET DOMAIN='" + domain + "' WHERE OID=" + oid; 
+				if(!major.equals("")){ 
+					String update_query = "UPDATE STUDENT SET MAJOR='" + major + "' WHERE UNI=" + uni; 
 					Statement update_stmt = conn.createStatement(); 
 					int result = update_stmt.executeUpdate(update_query);
 					if(result==0){ 
-						request.getSession().setAttribute("badaddorg", true);
+						request.getSession().setAttribute("badaddschool", true);
 					}
 					else{
-						request.getSession().setAttribute("badaddorg", false);
+						request.getSession().setAttribute("badaddschool", false);
 
 					}
 				}
-				if(!position_count.equals("")){ 
-					String update_query = "UPDATE ORGANIZATION SET POSITION_COUNT=" + position_count + " WHERE OID=" + oid; 
+				if(!school.equals("")){ 
+					String update_query = "UPDATE STUDENT SET SCHOOL='" + school + "' WHERE UNI=" + uni; 
 					Statement update_stmt = conn.createStatement(); 
 					int result = update_stmt.executeUpdate(update_query);
 					if(result==0){ 
-						request.getSession().setAttribute("badaddorg", true);
+						request.getSession().setAttribute("badaddschool", true);
 					}
 					else{
-						request.getSession().setAttribute("badaddorg", false);
+						request.getSession().setAttribute("badaddschool", false);
 
 					}
 				}
-				if(!member_count.equals("")){ 
-					String update_query = "UPDATE ORGANIZATION SET MEMBER_COUNT=" + member_count + " WHERE OID=" + oid; 
+				if(!year.equals("")){ 
+					String update_query = "UPDATE STUDENT SET YEAR=" + year + " WHERE UNI=" + uni; 
 					Statement update_stmt = conn.createStatement(); 
 					int result = update_stmt.executeUpdate(update_query);
 					if(result==0){ 
-						request.getSession().setAttribute("badaddorg", true);
+						request.getSession().setAttribute("badaddschool", true);
 					}
 					else{
-						request.getSession().setAttribute("badaddorg", false);
+						request.getSession().setAttribute("badaddschool", false);
 
 					}
 				}
@@ -105,20 +106,20 @@ public class OrgAdder extends HttpServlet {
 //
 //					}
 //				}
-				String query = "DELETE FROM ORGANIZATION WHERE "
+				String query = "DELETE FROM STUDENT WHERE "
 						+ 
-						"oid="+request.getParameter("oid")
-						+ " AND name=" + "'" + request.getParameter("name") +"'"; 
+						"uni='"+uni
+						+ "' AND name=" + "'" + name +"'"; 
 
 				System.out.println(query);
 				Statement stmt = conn.createStatement(); 
 				int result = stmt.executeUpdate(query);
 				if (result == 0){
-					request.getSession().setAttribute("badaddorg", true);
+					request.getSession().setAttribute("badaddstudent", true);
 
 				}
 				else{
-					request.getSession().setAttribute("badaddorg", false);
+					request.getSession().setAttribute("badaddstudent", false);
 
 				}
 			}
@@ -126,41 +127,30 @@ public class OrgAdder extends HttpServlet {
 			
 				String query = ""; 
 				
-				if(domain.equals("") && !position_count.matches("^\\d+$")){ 
-					query = "insert into ORGANIZATION (OID, NAME, MEMBER_COUNT) values ("
-							+ request.getParameter("oid")
-							+ ", '"
+				if(major.equals("")){ 
+					query = "insert into STUDENT (UNI, NAME, SCHOOL, YEAR) values ('"
+							+ request.getParameter("uni")
+							+ "', '"
 							+ request.getParameter("name")
 							+ "', '"
-							+ request.getParameter("member_count")
-							+ 
-							"')";
+							+ request.getParameter("school")
+							+ "', "+request.getParameter("year")+
+							
+							")";
 				}
-				else if(domain.equals("") && position_count.matches("^\\d+$")){ 
-					query = "insert into ORGANIZATION (OID, NAME, POSITION_COUNT, MEMBER_COUNT) values ("
-							+ request.getParameter("oid")
-							+ ", '"
-							+ request.getParameter("name")
-							+ "', '"
-							+ request.getParameter("position_count")
-							+ "', '"
-							+ request.getParameter("member_count")
-							+ 
-							"')";
-				}
+				
 				else{ 
-					query = "insert into ORGANIZATION (OID, NAME, DOMAIN, POSITION_COUNT, MEMBER_COUNT) VALUES ("
-							+ request.getParameter("oid")
-							+ ", '"
+					query = "insert into STUDENT (UNI, NAME, MAJOR, SCHOOL, YEAR) values ('"
+							+ request.getParameter("uni")
+							+ "', '"
 							+ request.getParameter("name")
 							+ "', '"
-							+ request.getParameter("domain")
+							+ request.getParameter("major")
 							+ "', '"
-							+ request.getParameter("position_count")
-							+ "', '"
-							+ request.getParameter("member_count")
-							+ 
-							"')";
+							+ request.getParameter("school")
+							+ "', "+request.getParameter("year")+
+							
+							")";
 
 				}
 
@@ -168,37 +158,21 @@ public class OrgAdder extends HttpServlet {
 				Statement stmt = conn.createStatement(); 
 				int result = stmt.executeUpdate(query);
 				if (result == 0){
-					request.getSession().setAttribute("badaddorg", true);
+					request.getSession().setAttribute("badaddstudent", true);
 
 				}
 				else{
-					request.getSession().setAttribute("badaddorg", false);
+					request.getSession().setAttribute("badaddstudent", false);
 
 				}
-				String gov_body = request.getParameter("gov_body"); 
-				if(!gov_body.equals("")){ 
-
-
-					Statement gov_stmt = conn.createStatement(); 
-					String gov_query = "insert into MANAGES (NAME, OID, LIAISON) VALUES ('"
-							+ gov_body +"', " + request.getParameter("oid") + ", '" + request.getParameter("liaison") +"')";
-					int gov_result = gov_stmt.executeUpdate(gov_query);
-					if (gov_result == 0){
-						request.getSession().setAttribute("badaddorg", true);
-
-					}
-					else{
-						request.getSession().setAttribute("badaddorg", false);
-
-					}
-				}
+	
 			}
 			response.sendRedirect("home.jsp");
 			pw.println("insertion successful");
 			conn.commit();
 			conn.close();
 		} catch (SQLException e) {
-			request.getSession().setAttribute("badaddorg", true);
+			request.getSession().setAttribute("badaddstudent", true);
 
 			response.sendRedirect("home.jsp");
 			try {
