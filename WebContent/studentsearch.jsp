@@ -13,14 +13,9 @@
 <title>Add/Remove/Update Student</title>
 </head>
 <body>
-<form name="add" action="studentsearch" method="post"
+<form name="add" action="studentsearchresult.jsp" method="post"
 		onsubmit="return validateForm()">
-		<p>
-			Add/Remove/Update: <select name="option">
-				<option value="add">Add</option>
-				<option value="remove">Remove</option>
-				<option value="update">Update</option>
-			</select>
+		
 		<p>
 			UNI: <input type="text" name="uni" size="5" maxlength="10">
 		</p>

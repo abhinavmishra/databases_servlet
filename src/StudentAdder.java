@@ -167,7 +167,7 @@ public class StudentAdder extends HttpServlet {
 					request.getSession().setAttribute("badaddstudent", false);
 
 				}
-	
+				
 			}
 			response.sendRedirect("home.jsp");
 			pw.println("insertion successful");

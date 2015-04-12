@@ -53,7 +53,7 @@ if(addOrgWorked!=null){
 }
 %>
 	<p>
-		Click <a href="addorg.jsp">here</a> to add, remove, or update an organization.
+		Click <a href="organizationmainscreen.jsp">here</a> to add, remove, or update an organization.
 	</p>
 	<p>
 	Click <a href="studentportal.jsp"> here to access student portal</a>
@@ -62,10 +62,14 @@ if(addOrgWorked!=null){
 Click <a href = "alumniorg.jsp"> here </a> to register alumni membership for organization
 </p>
 	<p> 
-Click <a href = "eventportal.jsp"> here </a> to access event portal
+Click <a href = "eventmainscreen.jsp"> here </a> to access event portal
 </p>
 	<p> 
 Click <a href = "expenditurecreate.jsp"> here </a> to create expenditures
 </p>
+<p>
+Click <a href = "advancedsearch.jsp"> here </a> to do an advanced search with student and organization
+</p>
+
 </body>
 </html>
