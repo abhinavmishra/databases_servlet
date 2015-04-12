@@ -8,7 +8,10 @@
 </head>
 <body>
 <p> 
-Click <a href = "addstudent.jsp"> here </a> to add/remove/update a student/alumni
+Click <a href = "addstudent.jsp"> here </a> to add/remove/update a student
+</p>
+<p> 
+Click <a href = "joinorg.jsp"> here </a> to join an organization
 </p>
 </body>
 </html>

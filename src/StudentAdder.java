@@ -51,7 +51,8 @@ public class StudentAdder extends HttpServlet {
 			String name = request.getParameter("name"); 
 			if(opt.equals("update")){ 
 				if(!major.equals("")){ 
-					String update_query = "UPDATE STUDENT SET MAJOR='" + major + "' WHERE UNI=" + uni; 
+					String update_query = "UPDATE STUDENT SET MAJOR='" + major + "' WHERE UNI='" + uni + "'"; 
+					System.out.println(update_query);
 					Statement update_stmt = conn.createStatement(); 
 					int result = update_stmt.executeUpdate(update_query);
 					if(result==0){ 
@@ -63,8 +64,9 @@ public class StudentAdder extends HttpServlet {
 					}
 				}
 				if(!school.equals("")){ 
-					String update_query = "UPDATE STUDENT SET SCHOOL='" + school + "' WHERE UNI=" + uni; 
+					String update_query = "UPDATE STUDENT SET SCHOOL='" + school + "' WHERE UNI='" + uni + "'"; 
 					Statement update_stmt = conn.createStatement(); 
+					System.out.println(update_query);
 					int result = update_stmt.executeUpdate(update_query);
 					if(result==0){ 
 						request.getSession().setAttribute("badaddschool", true);
@@ -75,7 +77,7 @@ public class StudentAdder extends HttpServlet {
 					}
 				}
 				if(!year.equals("")){ 
-					String update_query = "UPDATE STUDENT SET YEAR=" + year + " WHERE UNI=" + uni; 
+					String update_query = "UPDATE STUDENT SET YEAR=" + year + " WHERE UNI='" + uni + "'"; 
 					Statement update_stmt = conn.createStatement(); 
 					int result = update_stmt.executeUpdate(update_query);
 					if(result==0){ 
@@ -169,12 +171,13 @@ public class StudentAdder extends HttpServlet {
 			}
 			response.sendRedirect("home.jsp");
 			pw.println("insertion successful");
-			conn.commit();
+			//conn.commit();
 			conn.close();
 		} catch (SQLException e) {
+			e.printStackTrace();
 			request.getSession().setAttribute("badaddstudent", true);
-
 			response.sendRedirect("home.jsp");
+			
 			try {
 				conn.close();
 			} catch (SQLException e1) {

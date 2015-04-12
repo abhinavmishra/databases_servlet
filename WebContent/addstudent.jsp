@@ -26,7 +26,7 @@
 		}
 		if(option==="update"){ 
 			
-			if(major==="" || school==="" || year==="" || isNaN(year)){ 
+			if(!(major!==""  || school!==""|| (year!=="" && isFinite(year)))){
 				
 				alert("year, school or major cannot be blank and year needs to be a number"); 
 				return false; 

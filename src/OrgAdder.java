@@ -176,6 +176,7 @@ public class OrgAdder extends HttpServlet {
 
 				}
 				String gov_body = request.getParameter("gov_body"); 
+				System.out.println(gov_body);
 				if(!gov_body.equals("")){ 
 
 
@@ -195,7 +196,7 @@ public class OrgAdder extends HttpServlet {
 			}
 			response.sendRedirect("home.jsp");
 			pw.println("insertion successful");
-			conn.commit();
+			//conn.commit();
 			conn.close();
 		} catch (SQLException e) {
 			request.getSession().setAttribute("badaddorg", true);
