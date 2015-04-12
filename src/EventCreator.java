@@ -51,6 +51,9 @@ public class EventCreator extends HttpServlet {
 			String date = request.getParameter("date"); 
 			String eid = request.getParameter("eventid"); 
 			String name = request.getParameter("name"); 
+			String building = request.getParameter("building"); 
+			String[] split2 = building.split(":");
+			String building_addr = split2[1];
 			if(opt.equals("update")){ 
 				if(!name.equals("")){ 
 					String update_query = "UPDATE EVENT SET NAME='" + name + "' WHERE EID='" + eid + "'";
@@ -133,7 +136,7 @@ public class EventCreator extends HttpServlet {
 				}
 				else{
 					request.getSession().setAttribute("badaddevent", false);
-
+					
 				}
 			}
 			else{
@@ -169,6 +172,17 @@ public class EventCreator extends HttpServlet {
 				Statement run_by_stmt = conn.createStatement(); 
 				int result2 = run_by_stmt.executeUpdate(run_by_query);
 				if(result2==0){ 
+					request.getSession().setAttribute("badaddevent", true);
+				}
+				else{
+					request.getSession().setAttribute("badaddevent", false);
+
+				}
+				String is_in_query = "INSERT INTO IS_IN (ADDRESS, DATE_TIME, EID) VALUES ('" + building_addr + "', '" + date + "', '" + eid + "')";
+				System.out.println(is_in_query);
+				Statement is_in_stmt = conn.createStatement(); 
+				int result3 = is_in_stmt.executeUpdate(is_in_query);
+				if(result3==0){ 
 					request.getSession().setAttribute("badaddevent", true);
 				}
 				else{

@@ -5,6 +5,7 @@
 <%
 	Connection conn = null;
 	ResultSet rset = null;
+	ResultSet rset2 = null; 
 	String error_msg = "";
 
 	try {
@@ -18,7 +19,8 @@
 		Statement stmt = conn.createStatement();
 
 		rset = stmt.executeQuery("SELECT * FROM ORGANIZATION");
-
+		Statement stmt2 = conn.createStatement(); 
+		rset2 = stmt2.executeQuery("SELECT * FROM BUILDING");
 	} catch (SQLException e) {
 		error_msg = e.getMessage();
 		if (conn != null) {
@@ -37,6 +39,7 @@
 		var name = document.forms["event_create"]["name"].value;
 		var description = document.forms["event_create"]["description"].value;
 		var date = document.forms["event_create"]["date"].value;
+		var building = document.forms["event_create"]["building"].value; 
 		if(eid==="" || name==="" || date===""){
 			alert("eid name and date cannot be left blank"); 
 			return false; 
@@ -94,7 +97,18 @@
 		<p>
 			Date <input type="text" name="date" size="10" maxlength="25">
 		</p>
-		
+		<p>
+					Building: <select name="building">
+			<option value=""></option>
+			<%
+				while (rset2.next()) {
+			%>
+			<option><%=rset2.getString(2) + ":" + rset2.getString(1)%></option>
+			<%
+				}
+			%>
+		</select>
+		</p>
 	
 		<input type="submit">
 	</form>
