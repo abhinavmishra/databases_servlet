@@ -7,6 +7,8 @@
 <%
 	Connection conn = null;
 	ResultSet rset = null;
+	ResultSet rset2= null;
+
 	String error_msg = "";
 
 	try {
@@ -20,6 +22,8 @@
 		Statement stmt = conn.createStatement();
 
 		rset = stmt.executeQuery("SELECT * FROM GOVERNING_BODY");
+		Statement stmt2 = conn.createStatement();
+		rset2 = stmt2.executeQuery("SELECT DISTINCT NAME FROM ADVISOR_ADVISES");
 
 	} catch (SQLException e) {
 		error_msg = e.getMessage();
@@ -120,6 +124,18 @@
 				}
 			%>
 		</select>
+		<p>
+		Advisor: <select name="advisor">
+			<option value=""></option>
+			<%
+				while (rset2.next()) {
+			%>
+			<option><%=rset2.getString(1)%></option>
+			<%
+				}
+			%>
+		</select>
+		</p>
 		<p>
 			Liaison <input type="text" name="liaison" size="5" maxlength="10">
 		</p>

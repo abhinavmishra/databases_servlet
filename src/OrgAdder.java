@@ -48,6 +48,8 @@ public class OrgAdder extends HttpServlet {
 			String position_count = request.getParameter("position_count"); 
 			String member_count = request.getParameter("member_count"); 
 			String oid = request.getParameter("oid"); 
+			String advisor = request.getParameter("advisor");
+			System.out.println(advisor);
 			if(opt.equals("update")){ 
 				if(!domain.equals("")){ 
 					String update_query = "UPDATE ORGANIZATION SET DOMAIN='" + domain + "' WHERE OID=" + oid; 
@@ -121,6 +123,7 @@ public class OrgAdder extends HttpServlet {
 					request.getSession().setAttribute("badaddorg", false);
 
 				}
+				
 			}
 			else{
 			
@@ -163,7 +166,7 @@ public class OrgAdder extends HttpServlet {
 							"')";
 
 				}
-
+				
 				System.out.println(query);
 				Statement stmt = conn.createStatement(); 
 				int result = stmt.executeUpdate(query);
@@ -185,6 +188,32 @@ public class OrgAdder extends HttpServlet {
 							+ gov_body +"', " + request.getParameter("oid") + ", '" + request.getParameter("liaison") +"')";
 					int gov_result = gov_stmt.executeUpdate(gov_query);
 					if (gov_result == 0){
+						request.getSession().setAttribute("badaddorg", true);
+
+					}
+					else{
+						request.getSession().setAttribute("badaddorg", false);
+
+					}
+				}
+				if(!advisor.equals("")){ 
+					String adv_info_query = "SELECT DISTINCT UNI, PHONE_NUMBER, SINCE FROM ADVISOR_ADVISES WHERE NAME='"+advisor+"'" ;
+					System.out.println(adv_info_query);
+					Statement stmt3 = conn.createStatement(); 
+					ResultSet rset3 = stmt3.executeQuery(adv_info_query);
+					rset3.next();
+					String uni = rset3.getString(1);
+					System.out.println(uni);
+					String phone_num = rset3.getString(2);
+					System.out.println(phone_num);
+					String since = rset3.getString(3);
+					System.out.println(since);
+					Statement adv_stmt = conn.createStatement(); 
+					String adv_query = "insert into ADVISOR_ADVISES (UNI, OID, NAME, DOMAIN, PHONE_NUMBER, SINCE) VALUES ('"
+							+ uni+"', " + oid + ", '" + advisor + "', '" + domain + "', " + phone_num + ", " + since + ")"; 
+					System.out.println(adv_query);
+					int adv_result = adv_stmt.executeUpdate(adv_query); 
+					if (adv_result == 0){
 						request.getSession().setAttribute("badaddorg", true);
 
 					}
