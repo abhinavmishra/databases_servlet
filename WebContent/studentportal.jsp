@@ -11,7 +11,11 @@
 Click <a href = "addstudent.jsp"> here </a> to add/remove/update a student
 </p>
 <p> 
-Click <a href = "joinorg.jsp"> here </a> to join an organization
+Click <a href = "studentsearch.jsp"> here </a> to do student search
 </p>
+<p> 
+Click <a href = "joinorg.jsp"> here </a> to join, leave, or update organization membership
+</p>
+
 </body>
 </html>

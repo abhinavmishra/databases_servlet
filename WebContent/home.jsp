@@ -58,5 +58,14 @@ if(addOrgWorked!=null){
 	<p>
 	Click <a href="studentportal.jsp"> here to access student portal</a>
 	</p>
+	<p> 
+Click <a href = "alumniorg.jsp"> here </a> to register alumni membership for organization
+</p>
+	<p> 
+Click <a href = "eventportal.jsp"> here </a> to access event portal
+</p>
+	<p> 
+Click <a href = "expenditurecreate.jsp"> here </a> to create expenditures
+</p>
 </body>
 </html>
